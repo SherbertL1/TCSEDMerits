@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Load the jQuery and jQuery UI libraries. -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script>
+$(function() {
+  loadData();
+});
+
+function loadData() {
+  $('#user').text('Loading...');
+  google.script.run.withSuccessHandler(showMeritData)
+  .withFailureHandler(showError)
+  .getMeritData();
+}
+
+function showMeritData(data){
+  $('#name').text(data.Name);
+  $('#house').text(data.Housesforthisacademicyear);
+  $('#hpweek').text(data.MeritsThisWeek);
+  $('#hpterm').text(data.MeritsThisTerm);
+  $('#hpyear').text(data.MeritsYeartoDate);
+  console.log(data);
+}
+
+function showError(error) {
+  console.log(error);
+  window.alert('An error has occurred, please try again.');
+}
+
+</script>
+</head>
+<body>
+
+<h1>Hello <span id="name"></span></h1>
+
+<h2>You are in <span id="house"></span></h2>
+
+<p><b>House Points (This week): <span id="hpweek"></span></b></p>
+<p><b>House Points (This term): <span id="hpterm"></span></b></p>
+<p><b>House Points (This year): <span id="hpyear"></span></b></p>
+
+<em>Totals update every night</em>
+
+</body>
+</html>
